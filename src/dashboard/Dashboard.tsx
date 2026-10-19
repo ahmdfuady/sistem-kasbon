@@ -44,10 +44,28 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
   const [copied, setCopied] = useState(false);
 
-  const handleCopyText = () => {
-    navigator.clipboard.writeText(selectedCustomer.waText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyText = async () => {
+    try {
+      if (navigator?.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(selectedCustomer.waText);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = selectedCustomer.waText;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Gagal menyalin teks pesan:', error);
+      setCopied(false);
+    }
   };
 
   return (
