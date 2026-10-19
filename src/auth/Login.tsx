@@ -18,9 +18,10 @@ import {
 interface LoginProps {
   onBackToHome?: () => void;
   onNavigateToRegister?: () => void;
+  onForgotPassword?: () => void; // <-- TAMBAHKAN INI
 }
 
-export default function Login({ onBackToHome, onNavigateToRegister }: LoginProps) {
+export default function Login({ onBackToHome, onNavigateToRegister, onForgotPassword }: LoginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -65,7 +66,7 @@ export default function Login({ onBackToHome, onNavigateToRegister }: LoginProps
         <div className="w-full max-w-5xl bg-white/70 backdrop-blur-md rounded-3xl p-3 sm:p-5 border border-slate-200/60 shadow-xl shadow-slate-200/50">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             
-            {/* ================= PANEL KIRI (INFO WARUNG) ================= */}
+            {/* PANEL KIRI */}
             <div className="lg:col-span-5 bg-gradient-to-b from-emerald-50/70 to-slate-50 border border-emerald-100/80 rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
               <div>
                 <div className="inline-flex items-center gap-1.5 bg-emerald-100/80 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-full mb-6">
@@ -97,7 +98,6 @@ export default function Login({ onBackToHome, onNavigateToRegister }: LoginProps
                 </ul>
               </div>
 
-              {/* Warung Card Mockup & Footer Kiri */}
               <div className="mt-8 pt-4">
                 <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-900 group">
                   <img 
@@ -125,7 +125,7 @@ export default function Login({ onBackToHome, onNavigateToRegister }: LoginProps
               </div>
             </div>
 
-            {/* ================= PANEL KANAN (FORM LOGIN) ================= */}
+            {/* PANEL KANAN */}
             <div className="lg:col-span-7 bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-10 flex flex-col justify-between shadow-sm">
               <div>
                 <div className="flex items-start justify-between mb-8">
@@ -212,9 +212,14 @@ export default function Login({ onBackToHome, onNavigateToRegister }: LoginProps
                       <span>Ingat di komputer kasir ini</span>
                     </label>
 
-                    <a href="#lupa-password" className="font-bold text-emerald-700 hover:text-emerald-800 hover:underline">
+                    {/* Tombol Lupa Kata Sandi */}
+                    <button 
+                      type="button"
+                      onClick={onForgotPassword}
+                      className="font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer bg-transparent border-none p-0"
+                    >
                       Lupa Kata Sandi?
-                    </a>
+                    </button>
                   </div>
 
                   <button 
@@ -227,7 +232,6 @@ export default function Login({ onBackToHome, onNavigateToRegister }: LoginProps
                 </form>
               </div>
 
-              {/* Box Bawah: Daftar Warung Baru & CS WhatsApp */}
               <div className="mt-8 space-y-3 pt-4 border-t border-slate-100">
                 <div className="bg-slate-50 rounded-xl p-3 text-center text-xs text-slate-600 font-medium">
                   Belum punya buku kasbon online?{' '}
@@ -267,7 +271,6 @@ export default function Login({ onBackToHome, onNavigateToRegister }: LoginProps
 
           </div>
 
-          {/* Badges bawah container */}
           <div className="py-3 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[11px] text-slate-500 font-medium">
             <span className="flex items-center gap-1.5">
               <Lock className="w-3.5 h-3.5 text-emerald-600" /> Enkripsi SSL 256-Bit
@@ -284,7 +287,6 @@ export default function Login({ onBackToHome, onNavigateToRegister }: LoginProps
         </div>
       </main>
 
-      {/* Footer Bottom */}
       <footer className="w-full px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 border-t border-slate-200/60 bg-white/50">
         <div className="flex items-center gap-1.5 mb-2 sm:mb-0">
           <Lock className="w-3.5 h-3.5 text-emerald-600" />
