@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { 
   CheckCircle2, 
   XCircle, 
@@ -6,29 +6,25 @@ import {
   ShieldCheck, 
   Zap, 
   MessageSquare, 
+  Smartphone, 
   ChevronDown, 
   ArrowRight, 
   Play, 
   Star,
-  DollarSign,
-  FileDown
+  DollarSign
 } from 'lucide-react';
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      [elementName: string]: any;
-    }
-  }
+interface KasbonKuLandingProps {
+  onStartFree?: () => void;
 }
 
-export default function KasbonKuLanding() {
+export default function KasbonKuLanding({ onStartFree }: KasbonKuLandingProps) {
   // State Kalkulator Simulasi
-  const [kasbonHarian, setKasbonHarian] = useState(150000);
-  const [jumlahPelanggan, setJumlahPelanggan] = useState(10);
+  const [kasbonHarian, setKasbonHarian] = useState<number>(150000);
+  const [jumlahPelanggan, setJumlahPelanggan] = useState<number>(10);
 
   // State FAQ Accordion
-  const [openFaq, setOpenFaq] = useState(null as number | null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -84,7 +80,10 @@ export default function KasbonKuLanding() {
             <a href="#faq" className="hover:text-emerald-600 transition">Tanya Jawab</a>
           </nav>
 
-          <button className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition shadow-sm hover:shadow-md">
+          <button 
+            onClick={onStartFree}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition shadow-sm hover:shadow-md cursor-pointer"
+          >
             Mulai Gratis
           </button>
         </div>
@@ -115,7 +114,10 @@ export default function KasbonKuLanding() {
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
-                <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-3.5 rounded-xl transition shadow-lg shadow-emerald-600/30 flex items-center gap-2">
+                <button 
+                  onClick={onStartFree}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-3.5 rounded-xl transition shadow-lg shadow-emerald-600/30 flex items-center gap-2 cursor-pointer"
+                >
                   <span>Pakai Gratis Sekarang</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
@@ -224,7 +226,10 @@ export default function KasbonKuLanding() {
                   </div>
                 </div>
 
-                <button className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold transition">
+                <button 
+                  onClick={onStartFree}
+                  className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold transition cursor-pointer"
+                >
                   + Catat Kasbon Baru (5 Detik)
                 </button>
               </div>
@@ -393,11 +398,11 @@ export default function KasbonKuLanding() {
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
               <div className="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center">
-                <FileDown className="w-5 h-5" />
+                <Smartphone className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-slate-900">Laporan Otomatis</h4>
+              <h4 className="font-bold text-slate-900">Bisa Diakses Mode Offline</h4>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Lihat laporan kasbon mingguan atau bulanan untuk arsip warung Anda.
+                Sinyal warung lemot? Kasbon tetap bisa dicatat dan akan tersinkron otomatis saat sinyal kembali normal.
               </p>
             </div>
           </div>
@@ -468,7 +473,10 @@ export default function KasbonKuLanding() {
                   </p>
                 </div>
 
-                <button className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-md shadow-emerald-600/30">
+                <button 
+                  onClick={onStartFree}
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-md shadow-emerald-600/30 cursor-pointer"
+                >
                   Selamatkan Modal Sekarang
                 </button>
               </div>
@@ -575,7 +583,7 @@ export default function KasbonKuLanding() {
               <div key={idx} className="bg-white rounded-xl border border-slate-200/80 overflow-hidden">
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-4 text-left font-bold text-xs sm:text-sm text-slate-800 flex justify-between items-center hover:bg-slate-50 transition"
+                  className="w-full p-4 text-left font-bold text-xs sm:text-sm text-slate-800 flex justify-between items-center hover:bg-slate-50 transition cursor-pointer"
                 >
                   <span>{item.q}</span>
                   <ChevronDown className={`w-4 h-4 text-emerald-600 transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
@@ -602,10 +610,16 @@ export default function KasbonKuLanding() {
               Bergabunglah dengan ribuan pemilik warung dan kelontong di seluruh Indonesia yang telah beralih dari buku kertas ke KasbonKu.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-2">
-              <button className="bg-white hover:bg-slate-100 text-emerald-800 font-bold px-7 py-3 rounded-xl transition text-xs sm:text-sm shadow-md">
+              <button 
+                onClick={onStartFree}
+                className="bg-white hover:bg-slate-100 text-emerald-800 font-bold px-7 py-3 rounded-xl transition text-xs sm:text-sm shadow-md cursor-pointer"
+              >
                 Coba Demo Tanpa Daftar
               </button>
-              <button className="bg-emerald-950/60 hover:bg-emerald-950 text-white font-bold px-7 py-3 rounded-xl border border-emerald-400/30 transition text-xs sm:text-sm">
+              <button 
+                onClick={onStartFree}
+                className="bg-emerald-950/60 hover:bg-emerald-950 text-white font-bold px-7 py-3 rounded-xl border border-emerald-400/30 transition text-xs sm:text-sm cursor-pointer"
+              >
                 Mulai Pakai KasbonKu Gratis
               </button>
             </div>
