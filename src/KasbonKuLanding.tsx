@@ -6,12 +6,12 @@ import {
   ShieldCheck, 
   Zap, 
   MessageSquare, 
-  Smartphone, 
   ChevronDown, 
   ArrowRight, 
   Play, 
   Star,
-  DollarSign
+  DollarSign,
+  FileDown
 } from 'lucide-react';
 
 declare global {
@@ -393,11 +393,11 @@ export default function KasbonKuLanding() {
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
               <div className="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center">
-                <Smartphone className="w-5 h-5" />
+                <FileDown className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-slate-900">Bisa Diakses Mode Offline</h4>
+              <h4 className="font-bold text-slate-900">Laporan Otomatis</h4>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Sinyal warung lemot? Kasbon tetap bisa dicatat dan akan tersinkron otomatis saat sinyal kembali normal.
+                Lihat laporan kasbon mingguan atau bulanan untuk arsip warung Anda.
               </p>
             </div>
           </div>
