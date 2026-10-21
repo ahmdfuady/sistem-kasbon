@@ -14,6 +14,8 @@ import {
   Server, 
   LockKeyhole
 } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { validasiEmail, validasiSandiBaru, validasiTeksWajib, validasiWhatsapp } from '../validation';
 
 interface RegisterProps {
   onBackToLogin: () => void;
@@ -31,14 +33,56 @@ export default function Register({ onBackToLogin, onBackToHome }: RegisterProps)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // State untuk integrasi Supabase & UI Status
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert('Kata sandi dan konfirmasi kata sandi tidak cocok!');
+    setErrorMessage('');
+
+    const err =
+      validasiTeksWajib(namaPemilik, 'Nama pemilik') ??
+      validasiTeksWajib(namaWarung, 'Nama warung') ??
+      validasiEmail(email) ??
+      validasiWhatsapp(whatsapp, { wajib: true }) ??
+      validasiSandiBaru(password, confirmPassword);
+    if (err) {
+      setErrorMessage(err);
       return;
     }
-    alert('Pendaftaran warung berhasil! Silakan masuk ke akun Anda.');
-    onBackToLogin();
+
+    setLoading(true);
+
+    // Proses registrasi ke Supabase Auth
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        // Data metadata wajib persis untuk trigger kasbonku_schema.sql
+        data: {
+          nama_pemilik: namaPemilik,
+          nama_warung: namaWarung,
+          whatsapp: whatsapp,
+        },
+      },
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setErrorMessage(error.message);
+      return;
+    }
+
+    if (data.user) {
+      alert(
+        data.session
+          ? 'Pendaftaran warung berhasil! Silakan masuk ke akun Anda.'
+          : 'Pendaftaran berhasil! Cek email Anda untuk konfirmasi, lalu masuk ke akun Anda.'
+      );
+      onBackToLogin();
+    }
   };
 
   return (
@@ -178,6 +222,13 @@ export default function Register({ onBackToLogin, onBackToHome }: RegisterProps)
                     Buat buku kasbon digital warung Anda dalam 1 menit
                   </p>
                 </div>
+
+                {/* Pesan Error Registrasi */}
+                {errorMessage && (
+                  <div className="mb-4 p-3 bg-rose-50 text-rose-700 text-xs font-semibold rounded-xl border border-rose-200/80">
+                    {errorMessage}
+                  </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   
@@ -343,10 +394,11 @@ export default function Register({ onBackToLogin, onBackToHome }: RegisterProps)
                   {/* Tombol Daftar */}
                   <button 
                     type="submit"
-                    className="w-full bg-[#05603a] hover:bg-[#044e2f] text-white font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm transition shadow-md shadow-emerald-900/20 flex items-center justify-center gap-2 mt-4 cursor-pointer"
+                    disabled={loading}
+                    className="w-full bg-[#05603a] hover:bg-[#044e2f] text-white font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm transition shadow-md shadow-emerald-900/20 flex items-center justify-center gap-2 mt-4 cursor-pointer disabled:opacity-50"
                   >
                     <Mail className="w-4 h-4" />
-                    <span>Daftar Akun dengan Email</span>
+                    <span>{loading ? 'Memproses Pendaftaran...' : 'Daftar Akun dengan Email'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>

@@ -14,6 +14,9 @@ import {
   Cloud,
   CheckCircle
 } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { validasiEmail } from '../validation';
+import { getRememberPref, setRememberPref } from '../context/AuthContext';
 
 interface LoginProps {
   onBackToHome?: () => void;
@@ -31,14 +34,32 @@ export default function Login({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(getRememberPref());
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login attempt:', { email, password, rememberMe });
-    // Berhasil login -> arahkan ke Dashboard
-    if (onLoginSuccess) {
-      onLoginSuccess();
+    setErrorMsg('');
+    const err = validasiEmail(email) ?? (password ? null : 'Kata sandi wajib diisi.');
+    if (err) return setErrorMsg(err);
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      if (error) throw error;
+      setRememberPref(rememberMe);
+      if (data.user && onLoginSuccess) onLoginSuccess();
+    } catch (err: any) {
+      const msg: string = err?.message || '';
+      setErrorMsg(
+        /invalid login/i.test(msg)
+          ? 'Email atau kata sandi salah. Periksa kembali lalu coba lagi.'
+          : /email not confirmed/i.test(msg)
+          ? 'Email belum dikonfirmasi. Cek kotak masuk email Anda dulu.'
+          : msg || 'Gagal masuk. Periksa kembali email dan kata sandi Anda.'
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -154,6 +175,11 @@ export default function Login({
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {errorMsg && (
+                    <div className="bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium rounded-xl px-3.5 py-2.5">
+                      {errorMsg}
+                    </div>
+                  )}
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <label className="text-xs font-bold text-slate-800">
@@ -236,10 +262,11 @@ export default function Login({
                   {/* Tombol Masuk ke Akun Warung */}
                   <button 
                     type="submit"
-                    className="w-full bg-[#05603a] hover:bg-[#044e2f] text-white font-bold py-3.5 px-6 rounded-xl text-sm transition shadow-md shadow-emerald-900/20 flex items-center justify-center gap-2 mt-4 cursor-pointer"
+                    disabled={isLoading}
+                    className="w-full bg-[#05603a] hover:bg-[#044e2f] disabled:opacity-70 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition shadow-md shadow-emerald-900/20 flex items-center justify-center gap-2 mt-4 cursor-pointer"
                   >
                     <LogIn className="w-4 h-4" />
-                    <span>Masuk ke Akun Warung</span>
+                    <span>{isLoading ? 'Memeriksa...' : 'Masuk ke Akun Warung'}</span>
                   </button>
                 </form>
               </div>

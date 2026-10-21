@@ -11,6 +11,8 @@ import {
   Lightbulb, 
   ShieldAlert
 } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { validasiEmail } from '../validation';
 
 interface ForgotPasswordProps {
   onBackToLogin: () => void;
@@ -19,10 +21,28 @@ interface ForgotPasswordProps {
 
 export default function ForgotPassword({ onBackToLogin, onBackToHome }: ForgotPasswordProps) {
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Tautan pemulihan kata sandi telah dikirim ke ${email}!`);
+    setErrorMsg('');
+    setSent(false);
+    const err = validasiEmail(email);
+    if (err) return setErrorMsg(err);
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: window.location.origin,
+      });
+      if (error) throw error;
+      setSent(true);
+    } catch (err: any) {
+      setErrorMsg(err?.message || 'Terjadi kesalahan saat mengirim tautan pemulihan.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -138,13 +158,25 @@ export default function ForgotPassword({ onBackToLogin, onBackToHome }: ForgotPa
               </div>
             </div>
 
+            {sent && (
+              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium rounded-xl px-3.5 py-2.5">
+                Tautan pemulihan sudah dikirim ke <strong>{email}</strong>. Cek inbox atau folder spam.
+              </div>
+            )}
+            {errorMsg && (
+              <div className="bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium rounded-xl px-3.5 py-2.5">
+                {errorMsg}
+              </div>
+            )}
+
             {/* Submit Button */}
             <button 
               type="submit"
-              className="w-full bg-[#05603a] hover:bg-[#044e2f] text-white font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm transition shadow-md shadow-emerald-900/20 flex items-center justify-center gap-2 cursor-pointer pt-3"
+              disabled={isLoading}
+              className="disabled:opacity-70 w-full bg-[#05603a] hover:bg-[#044e2f] text-white font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm transition shadow-md shadow-emerald-900/20 flex items-center justify-center gap-2 cursor-pointer pt-3"
             >
               <Send className="w-4 h-4" />
-              <span>Kirim Tautan Pemulihan Kata Sandi</span>
+              <span>{isLoading ? 'Mengirim...' : 'Kirim Tautan Pemulihan Kata Sandi'}</span>
             </button>
           </form>
 
