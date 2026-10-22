@@ -6,17 +6,35 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+<<<<<<< HEAD
     "preview": "vite preview"
+=======
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+>>>>>>> 6bc36720981b9affe6414b404af8a093df22df99
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "typescript": "~6.0.2",
+<<<<<<< HEAD
     "vite": "^8.3.0"
   },
   "dependencies": {
+=======
+    "vite": "^8.3.0",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+>>>>>>> 6bc36720981b9affe6414b404af8a093df22df99
     "lucide-react": "^1.59.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6bc36720981b9affe6414b404af8a093df22df99

@@ -14,7 +14,12 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,
+<<<<<<< HEAD
     "jsx": "react-jsx"
+=======
+    "jsx": "react-jsx",
+    "types": ["vite/client"]
+>>>>>>> 6bc36720981b9affe6414b404af8a093df22df99
   },
   "include": ["src"]
 }
