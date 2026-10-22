@@ -87,7 +87,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   const doLogout = onLogout ?? signOut;
 
   return (
-    <div className="min-h-screen bg-[#f4f7f6] flex font-sans text-slate-800">
+    <div className="h-screen overflow-hidden bg-[#f4f7f6] flex font-sans text-slate-800">
       <Sidebar
         isActive={isActive}
         onNavigate={goMenu}
@@ -95,7 +95,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         onLogout={() => doLogout?.()}
       />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 min-h-0">
         <TopBar
           namaWarung={warung?.nama_warung || 'Warung'}
           namaPemilik={warung?.nama_pemilik || 'Juragan'}
@@ -115,7 +115,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         <MobileNav isActive={isActive} onNavigate={goMenu} onLogout={() => doLogout?.()} />
 
         {/* Halaman aktif */}
-        <main className="p-4 sm:p-6 lg:p-8 space-y-6">
+        <main className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
           {activeMenu === 'pengaturan' ? (
             <SettingsView />
           ) : activeMenu === 'laporan' ? (
