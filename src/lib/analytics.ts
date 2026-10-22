@@ -1,5 +1,5 @@
 import type { SaldoPelanggan, Transaksi } from './types';
-import { addDays, pecahBarang, toISODate } from './format';
+import { addDays, pecahBarang, toISODate } from './utils';
 
 export const dayKey = (iso: string): string => toISODate(new Date(iso));
 
@@ -83,6 +83,12 @@ export const daftarJatuhTempoHariIni = (saldos: SaldoPelanggan[]): SaldoPelangga
 };
 
 /** Pelanggan berutang dengan jatuh tempo dalam `hari` ke depan (atau sudah lewat) */
+/** Pelanggan yang perlu ditagih sekarang: yang sudah telat + yang jatuh tempo hari ini */
+export const daftarPerluDitagih = (saldos: SaldoPelanggan[]): SaldoPelanggan[] => [
+  ...daftarTelat(saldos),
+  ...daftarJatuhTempoHariIni(saldos),
+];
+
 export const daftarTempoDalam = (saldos: SaldoPelanggan[], hari = 7): SaldoPelanggan[] => {
   const batas = toISODate(addDays(new Date(), hari));
   return saldos.filter((s) => s.sisa_utang > 0 && !!s.jatuh_tempo_terakhir && s.jatuh_tempo_terakhir <= batas);

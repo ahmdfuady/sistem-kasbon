@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { X, UserPlus, Save } from 'lucide-react';
-import { createPelanggan, updatePelanggan } from '../lib/api';
+import { createPelanggan, updatePelanggan } from '../api';
 import type { Pelanggan } from '../lib/types';
-import { useAuth } from '../context/AuthContext';
-import { formatAngkaInput, parseAngka } from '../lib/format';
+import { useAuth } from '../features/auth/AuthContext';
+import { formatAngkaInput, parseAngka } from '../lib/utils';
 import { validasiPelanggan } from '../validation';
 
 interface Props {

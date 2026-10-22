@@ -1,13 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useAuth } from './context/AuthContext';
-import KasbonKuLanding from './KasbonKuLanding';
-import Login from './auth/Login';
-import Register from './auth/Register';
-import ForgotPassword from './auth/ForgotPassword';
-import ResetPassword from './auth/ResetPassword';
-import Dashboard from './dashboard/Dashboard';
+import { useAuth } from './features/auth/AuthContext';
+import LandingPage from './features/landing/LandingPage';
+import Login from './features/auth/Login';
+import Register from './features/auth/Register';
+import ForgotPassword from './features/auth/ForgotPassword';
+import ResetPassword from './features/auth/ResetPassword';
+import Dashboard from './features/dashboard/Dashboard';
 
 type PublicView = 'landing' | 'login' | 'register' | 'forgot';
+
+/**
+ * URL tanpa anchor landing (#masalah, #fitur, #cara-kerja, dst).
+ * Hash yang berisi "=" (mis. #access_token=...&type=recovery dari email reset sandi)
+ * sengaja TIDAK dianggap anchor supaya proses reset sandi Supabase tidak rusak.
+ */
+const urlTanpaAnchor = (): string => {
+  const { pathname, search, hash } = window.location;
+  const anchorBiasa = hash.length > 1 && !hash.includes('=');
+  return anchorBiasa ? pathname + search : pathname + search + hash;
+};
 
 export default function App() {
   const { session, loading, recovery } = useAuth();
@@ -16,7 +27,7 @@ export default function App() {
 
   const setView = useCallback((v: PublicView) => {
     setViewState(v);
-    window.history.pushState({ kasbonku: v }, '');
+    window.history.pushState({ kasbonku: v }, '', urlTanpaAnchor());
     window.scrollTo(0, 0);
   }, []);
 
@@ -27,6 +38,11 @@ export default function App() {
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
+
+  // Sudah login -> buang anchor landing dari URL
+  useEffect(() => {
+    if (session) window.history.replaceState(window.history.state, '', urlTanpaAnchor());
+  }, [!!session]);
 
   // Setelah logout (tidak ada sesi) -> kembali ke landing page
   useEffect(() => {
@@ -63,6 +79,6 @@ export default function App() {
     case 'forgot':
       return <ForgotPassword onBackToLogin={() => setView('login')} onBackToHome={() => setView('landing')} />;
     default:
-      return <KasbonKuLanding onStartFree={() => setView('login')} />;
+      return <LandingPage onStartFree={() => setView('login')} />;
   }
 }

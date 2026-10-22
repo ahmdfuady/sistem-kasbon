@@ -1,4 +1,4 @@
-// Satu pintu untuk semua validasi: import { validasiTransaksi } from '../validation';
+// Satu pintu untuk semua validasi: import { validasiTransaksi } from '.';
 export type { CekHasil } from './types';
 export * from './auth';
 export * from './kontak';

@@ -1,5 +1,5 @@
 import type { TempoOption } from '../lib/types';
-import { formatRupiah } from '../lib/format';
+import { formatRupiah } from '../lib/utils';
 import { MAKS_NOMINAL } from './pelanggan';
 import type { CekHasil } from './types';
 
