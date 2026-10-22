@@ -1,4 +1,3 @@
-import React from 'react';
 import { Search, Bell, User, ChevronDown, ShoppingBag } from 'lucide-react';
 import type { SaldoPelanggan, Transaksi } from '../../../lib/types';
 import { formatRupiah, formatWaktuRelatif } from '../../../lib/utils';

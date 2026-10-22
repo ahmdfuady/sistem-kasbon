@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Phone, MapPin, Calendar, PlusCircle, CheckCircle2, ExternalLink, Printer,
   MoreHorizontal, Edit2, Lock, Check, Trash2,

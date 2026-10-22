@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { SaldoPelanggan, Transaksi, Warung } from '../../../lib/types';
 import {
   awalBulan, daftarPerluDitagih, perubahanPiutangMingguan, persenLancar,

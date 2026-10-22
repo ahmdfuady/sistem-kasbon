@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { deletePelanggan, deleteTransaksi, getPelanggan, getSaldo, listTransaksi } from '../../../api';
 import type { Pelanggan, SaldoPelanggan, Transaksi } from '../../../lib/types';
@@ -215,4 +215,3 @@ export default function CustomerDetail({ pelangganId, onBackToDashboard, onRecor
     </div>
   );
 }
-

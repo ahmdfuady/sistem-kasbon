@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CheckCircle2, Copy, ExternalLink } from 'lucide-react';
 import { buildWaLink, formatRupiah } from '../../../../lib/utils';
 

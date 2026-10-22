@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowRight, LogOut } from 'lucide-react';
 import { NAV, type Menu } from '../menu';
 

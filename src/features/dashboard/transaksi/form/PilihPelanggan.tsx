@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { UserPlus, ChevronDown, Search, Lock } from 'lucide-react';
 import type { SaldoPelanggan } from '../../../../lib/types';
 import { formatRupiah, initials } from '../../../../lib/utils';

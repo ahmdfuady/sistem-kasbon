@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, UserPlus, Download, ExternalLink } from 'lucide-react';
 import { listSaldo } from '../../../api';
 import type { SaldoPelanggan } from '../../../lib/types';

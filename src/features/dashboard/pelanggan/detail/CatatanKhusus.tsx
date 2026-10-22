@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Edit2, Lock, Save, X } from 'lucide-react';
 import { updatePelanggan } from '../../../../api';
 import type { Pelanggan } from '../../../../lib/types';

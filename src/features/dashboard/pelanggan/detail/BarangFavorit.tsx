@@ -1,4 +1,3 @@
-import React from 'react';
 import { formatRupiah } from '../../../../lib/utils';
 import type { BarangFavorit as BarangFavoritItem } from './analisisRiwayat';
 

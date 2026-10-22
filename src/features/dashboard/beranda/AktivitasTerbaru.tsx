@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Transaksi } from '../../../lib/types';
 import { formatRupiah, formatWaktuRelatif, initials } from '../../../lib/utils';
 

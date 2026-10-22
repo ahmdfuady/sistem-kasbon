@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowUpRight, ArrowDownRight, TrendingUp, AlertCircle, Wallet, CheckCircle, Bell } from 'lucide-react';
 import { formatRupiah } from '../../../lib/utils';
 

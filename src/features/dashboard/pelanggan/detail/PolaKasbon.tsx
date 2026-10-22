@@ -1,4 +1,3 @@
-import React from 'react';
 import { TrendingUp } from 'lucide-react';
 import type { Pelanggan } from '../../../../lib/types';
 import type { PolaKasbonInfo } from './analisisRiwayat';

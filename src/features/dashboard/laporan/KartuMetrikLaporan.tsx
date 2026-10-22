@@ -1,4 +1,3 @@
-import React from 'react';
 import { Clock, ShieldCheck, TrendingUp, Wallet } from 'lucide-react';
 import { formatRupiah } from '../../../lib/utils';
 

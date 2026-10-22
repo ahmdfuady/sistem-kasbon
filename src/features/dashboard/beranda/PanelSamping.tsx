@@ -1,4 +1,3 @@
-import React from 'react';
 import type { BarangHasil } from '../../../lib/analytics';
 import { formatRupiah } from '../../../lib/utils';
 

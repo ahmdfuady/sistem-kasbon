@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ArrowRight, Copy, ExternalLink, ShoppingBag } from 'lucide-react';
 import type { SaldoPelanggan, Transaksi, Warung } from '../../../lib/types';
 import { buildPesanTagihan, buildWaLink, formatRupiah, formatTanggalPendek, initials } from '../../../lib/utils';

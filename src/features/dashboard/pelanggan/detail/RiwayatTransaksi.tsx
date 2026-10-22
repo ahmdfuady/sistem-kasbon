@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ArrowUpRight, ArrowDownLeft, Download, Trash2 } from 'lucide-react';
 import type { Pelanggan, Transaksi } from '../../../../lib/types';
 import { formatRupiah, formatTanggal, formatWaktu, labelMetode } from '../../../../lib/utils';

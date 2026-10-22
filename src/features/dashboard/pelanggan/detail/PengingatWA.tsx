@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Copy, ExternalLink } from 'lucide-react';
 import type { Pelanggan } from '../../../../lib/types';
 

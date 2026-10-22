@@ -1,4 +1,3 @@
-import React from 'react';
 import { X } from 'lucide-react';
 
 /** Jendela "Panduan Kilat KasbonKu" */

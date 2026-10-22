@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from './features/auth/AuthContext';
 import LandingPage from './features/landing/LandingPage';
 import Login from './features/auth/Login';

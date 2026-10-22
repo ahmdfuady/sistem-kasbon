@@ -1,4 +1,3 @@
-import React from 'react';
 import { Calendar, Check, Clock } from 'lucide-react';
 import type { TempoOption } from '../../../../lib/types';
 import { formatTanggalHari, hitungJatuhTempo, labelMetode } from '../../../../lib/utils';
