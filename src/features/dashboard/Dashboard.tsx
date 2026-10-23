@@ -8,12 +8,12 @@ import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import MobileNav from './components/MobileNav';
 import GuideModal from './components/GuideModal';
-import Beranda from './beranda/Beranda';
-import CustomerDetail from './pelanggan/CustomerDetail';
-import CustomerList from './pelanggan/CustomerList';
-import RecordTransaction from './transaksi/RecordTransaction';
-import FinancialReport from './laporan/FinancialReport';
-import SettingsView from './pengaturan/SettingsView';
+import Home from './home/Home';
+import CustomerDetail from './customers/CustomerDetail';
+import CustomerList from './customers/CustomerList';
+import RecordTransaction from './transactions/RecordTransaction';
+import FinancialReport from './reports/FinancialReport';
+import SettingsView from './settings/SettingsView';
 
 interface DashboardProps {
   onLogout?: () => void;
@@ -21,7 +21,7 @@ interface DashboardProps {
 
 /**
  * Kerangka dashboard: sidebar + top bar + satu halaman aktif di tengah.
- * Data pelanggan & transaksi dimuat di sini, lalu dibagikan ke Beranda dan pencarian.
+ * Data pelanggan & transaksi dimuat di sini, lalu dibagikan ke Home dan pencarian.
  */
 export default function Dashboard({ onLogout }: DashboardProps) {
   const { warung, signOut } = useAuth();
@@ -137,7 +137,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               onRecordTransaction={handleOpenRecord}
             />
           ) : (
-            <Beranda
+            <Home
               warung={warung}
               saldos={saldos}
               trans={trans}

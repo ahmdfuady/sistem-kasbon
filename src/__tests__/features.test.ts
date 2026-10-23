@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
   hitungStatusKasbon, hitungBarangFavorit, hitungPola,
-} from '../features/dashboard/pelanggan/detail/analisisRiwayat';
-import { infoStatus, monthKey, rb, PER_HALAMAN } from '../features/dashboard/laporan/helpers';
-import { plafonFromValue, plafonToValue } from '../features/dashboard/pengaturan/plafon';
+} from '../features/dashboard/customers/detail/historyAnalysis';
+import { infoStatus, monthKey, rb, PER_HALAMAN } from '../features/dashboard/reports/helpers';
+import { plafonFromValue, plafonToValue } from '../features/dashboard/settings/creditLimit';
 import { saldoBerjalan } from '../lib/analytics';
 import { mkTrans } from './helpers';
 

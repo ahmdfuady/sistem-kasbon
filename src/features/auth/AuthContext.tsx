@@ -9,7 +9,6 @@ interface AuthContextValue {
   user: User | null;
   warung: Warung | null;
   loading: boolean;
-  /** true saat user membuka link "reset password" dari email */
   recovery: boolean;
   setRecovery: (v: boolean) => void;
   refreshWarung: () => Promise<void>;

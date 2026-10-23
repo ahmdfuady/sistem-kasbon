@@ -1,17 +1,17 @@
-# Struktur `src/` KasbonKu
+# `src/` structure
 
 ```
 src/
-├── main.tsx, App.tsx          pintu masuk & penentu halaman (landing/login/dashboard)
-├── styles/index.css           gaya global (Tailwind)
-├── api/                       semua komunikasi ke Supabase (auth, warung, pelanggan, transaksi)
-├── lib/                       hal umum: supabase client, types, analytics, utils/ (rupiah, tanggal, whatsapp, cetak, csv)
-├── validation/                aturan validasi input
-├── components/                komponen yang dipakai banyak fitur (AddCustomerModal)
+├── main.tsx, App.tsx          entry point and top-level routing (landing / auth / dashboard)
+├── styles/index.css           global styles (Tailwind)
+├── api/                       all communication with Supabase (auth, shop, customers, transactions)
+├── lib/                       shared code: supabase client, types, analytics, utils/ (currency, date, text, whatsapp, print, csv)
+├── validation/                input validation rules
+├── components/                components shared by several features (AddCustomerModal)
 └── features/
-    ├── landing/               halaman depan (LandingPage + sections/)
+    ├── landing/               public landing page (LandingPage + sections/)
     ├── auth/                  AuthContext, AuthLayout, Login, Register, ForgotPassword, ResetPassword
-    └── dashboard/             Dashboard (kerangka) + components/ + beranda/ + pelanggan/ + transaksi/ + laporan/ + pengaturan/
+    └── dashboard/             Dashboard (shell) + components/ + home/ + customers/ + transactions/ + reports/ + settings/
 ```
 
-Aturan mudahnya: **fitur dicari di `features/`, urusan data di `api/`, fungsi bantu di `lib/utils/`.**
+Rule of thumb: **features live in `features/`, data access in `api/`, helper functions in `lib/utils/`.**
