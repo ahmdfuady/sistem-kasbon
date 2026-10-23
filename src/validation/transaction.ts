@@ -1,6 +1,6 @@
 import type { TempoOption } from '../lib/types';
 import { formatRupiah } from '../lib/utils';
-import { MAKS_NOMINAL } from './pelanggan';
+import { MAKS_NOMINAL } from './customer';
 import type { CekHasil } from './types';
 
 export interface InputTransaksi {

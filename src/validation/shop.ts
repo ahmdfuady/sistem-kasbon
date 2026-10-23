@@ -1,5 +1,5 @@
 import type { CekHasil } from './types';
-import { validasiTeksWajib, validasiWhatsapp } from './kontak';
+import { validasiTeksWajib, validasiWhatsapp } from './contact';
 
 export function validasiProfilWarung(input: {
   namaWarung: string;

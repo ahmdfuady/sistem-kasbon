@@ -1,6 +1,6 @@
 // Pintu masuk tunggal untuk semua komunikasi ke Supabase.
-// Komponen cukup: import { listSaldo, createTransaksi } from '../api'
+// Komponen cukup: import { listSaldo, createTransaksi } from '.'
 export * from './auth';
-export * from './warung';
-export * from './pelanggan';
-export * from './transaksi';
+export * from './shop';
+export * from './customers';
+export * from './transactions';

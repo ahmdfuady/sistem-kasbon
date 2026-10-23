@@ -1,7 +1,7 @@
 import type { TemplateWa } from '../types';
-import { formatRupiah } from './rupiah';
-import { formatTanggal } from './tanggal';
-import { labelMetode } from './teks';
+import { formatRupiah } from './currency';
+import { formatTanggal } from './date';
+import { labelMetode } from './text';
 
 // ---------- WhatsApp ----------
 export const normalizeWa = (phone: string | null | undefined): string | null => {
