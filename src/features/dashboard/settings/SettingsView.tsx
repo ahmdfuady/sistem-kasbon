@@ -27,6 +27,7 @@ export default function SettingsView() {
   const [fotoUrl, setFotoUrl] = useState(warung?.foto_url || '');
   const [fotoNama, setFotoNama] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [fotoMsg, setFotoMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
   // State Aturan
   const [plafonOption, setPlafonOption] = useState<Plafon>(plafonFromValue(warung?.plafon_default));
@@ -71,9 +72,9 @@ export default function SettingsView() {
     e.target.value = '';
     if (!file || !warung) return;
     const errFoto = validasiFotoProfil(file);
-    if (errFoto) return setSaveMsg({ ok: false, text: errFoto });
+    if (errFoto) return setFotoMsg({ ok: false, text: errFoto });
     setUploading(true);
-    setSaveMsg(null);
+    setFotoMsg(null);
     try {
       const url = await uploadFotoWarung(warung.id, file);
       setFotoUrl(url);
@@ -81,12 +82,12 @@ export default function SettingsView() {
       // simpan langsung supaya tidak hilang
       const upd = await updateWarung(warung.id, { foto_url: url });
       setWarung(upd);
-      setSaveMsg({ ok: true, text: 'Foto profil warung diperbarui.' });
+      setFotoMsg({ ok: true, text: 'Foto profil warung berhasil disimpan. Foto juga tampil di pojok kanan atas.' });
     } catch (err: any) {
-      setSaveMsg({
+      setFotoMsg({
         ok: false,
         text: /bucket|not found|row-level/i.test(err?.message || '')
-          ? 'Gagal upload: bucket "warung-foto" belum dibuat. Jalankan database/01_kasbonku_migrasi.sql di Supabase.'
+          ? 'Gagal upload: bucket "warung-foto" belum dibuat. Jalankan database/kasbonku_migrasi.sql di Supabase.'
           : err?.message || 'Gagal mengunggah foto.',
       });
     } finally {
@@ -193,6 +194,7 @@ export default function SettingsView() {
             fotoNama={fotoNama}
             uploading={uploading}
             onFotoChange={handleFoto}
+            fotoMsg={fotoMsg}
           />
 
           <RulesSection

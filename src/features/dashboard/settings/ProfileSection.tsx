@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Store, Image as ImageIcon } from 'lucide-react';
 import { inputCls } from './styles';
 
@@ -18,14 +18,18 @@ interface ProfileSectionProps {
   fotoNama: string;
   uploading: boolean;
   onFotoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /** hasil upload terakhir (berhasil / gagal), ditampilkan tepat di bawah kolom foto */
+  fotoMsg: { ok: boolean; text: string } | null;
 }
 
 /** 1. Profil warung: nama, pemilik, WhatsApp, foto, alamat, catatan struk */
 export default function ProfileSection({
   sectionRef, namaWarung, onNamaWarungChange, namaPemilik, onNamaPemilikChange, whatsappWarung, onWhatsappChange,
-  alamatWarung, onAlamatChange, catatanStruk, onCatatanStrukChange, fotoUrl, fotoNama, uploading, onFotoChange,
+  alamatWarung, onAlamatChange, catatanStruk, onCatatanStrukChange, fotoUrl, fotoNama, uploading, onFotoChange, fotoMsg,
 }: ProfileSectionProps) {
   const fileRef = useRef<HTMLInputElement>(null);
+  const [fotoRusak, setFotoRusak] = useState(false);
+  useEffect(() => setFotoRusak(false), [fotoUrl]);
 
   return (
     <div ref={sectionRef} className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-5 scroll-mt-24">
@@ -68,7 +72,7 @@ export default function ProfileSection({
         <div>
           <label className="text-xs font-bold text-slate-800 block mb-1">Foto Profil Warung</label>
           <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl p-1.5 px-3">
-            {fotoUrl ? <img src={fotoUrl} alt="Foto warung" className="w-8 h-8 rounded-lg object-cover shrink-0" /> : <ImageIcon className="w-5 h-5 text-slate-400 shrink-0" />}
+            {fotoUrl ? <img src={fotoUrl} alt="Foto warung" onError={() => setFotoRusak(true)} className="w-12 h-12 rounded-xl object-cover shrink-0" /> : <ImageIcon className="w-5 h-5 text-slate-400 shrink-0" />}
             <div className="flex-1 min-w-0">
               <p className="text-xs font-bold text-slate-800 truncate">{fotoNama || (fotoUrl ? 'Foto warung tersimpan' : 'Belum ada foto')}</p>
               <p className="text-[10px] text-slate-400">JPG/PNG, maks 2 MB</p>
@@ -79,6 +83,14 @@ export default function ProfileSection({
             </button>
           </div>
           <p className="text-[10px] text-slate-400 mt-1">Akan muncul di profil tautan tagihan pelanggan.</p>
+          {fotoMsg && (
+            <p className={`text-[11px] font-semibold mt-1 ${fotoMsg.ok ? 'text-emerald-700' : 'text-rose-600'}`}>{fotoMsg.text}</p>
+          )}
+          {fotoRusak && (
+            <p className="text-[11px] font-semibold mt-1 text-rose-600">
+              Foto tersimpan tetapi tidak bisa ditampilkan. Pastikan bucket "warung-foto" di Supabase Storage diset Public.
+            </p>
+          )}
         </div>
       </div>
 

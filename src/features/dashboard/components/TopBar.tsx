@@ -36,7 +36,11 @@ export default function TopBar({
     <header className="bg-white border-b border-slate-200/80 px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-30">
       <div className="flex items-center gap-4 flex-1 min-w-0">
         <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-800 shrink-0 max-w-[55%] sm:max-w-none">
-          <span className="text-emerald-600">🏪</span>
+          {fotoUrl ? (
+            <img src={fotoUrl} alt="" className="w-5 h-5 rounded-md object-cover" />
+          ) : (
+            <span className="text-emerald-600">🏪</span>
+          )}
           <span className="truncate">{namaWarung}</span>
           <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0" />
         </div>
