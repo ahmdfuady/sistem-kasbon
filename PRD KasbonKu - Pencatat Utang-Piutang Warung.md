@@ -58,18 +58,16 @@ Fokus proyek: **satu fitur inti (manajemen kasbon), kecil, selesai dengan baik**
 
 ## 5. User Stories dan Acceptance Criteria
 
-(Ditulis dalam bahasa Inggris agar konsisten dengan repo dan README.)
-
 | ID | User story | Acceptance criteria |
 | --- | --- | --- |
-| US-1 | As a shop owner, I can log in so that my records are private. | Valid credentials open the dashboard. Wrong password shows an error message. Any other page redirects to login when not authenticated. |
-| US-2 | As a shop owner, I can add a customer so that I can track their debt. | Name is required. Duplicate names are rejected. Phone, if given, contains digits only (08.. or +62..). |
-| US-3 | As a shop owner, I can record a new debt so that the balance is updated. | Amount must be an integer greater than 0. Date defaults to today and cannot be empty. Optional due date cannot be before the debt date. Customer balance increases by the amount. |
-| US-4 | As a shop owner, I can record a payment so that the remaining debt decreases. | Amount must be greater than 0. Amount cannot exceed the remaining balance. Balance decreases by the amount. Fully paid customer shows status "Lunas". |
-| US-5 | As a shop owner, I can view a customer's balance and history so that I know exactly what they owe. | History is sorted by date, newest first. Balance = total debts - total payments. Each entry shows type, amount, date, and note. |
-| US-6 | As a shop owner, I can see a list of overdue customers so that I know who to remind. | Customers with balance > 0 and due date earlier than today appear in "Telat". Fully paid customers never appear. The list shows days overdue. |
-| US-7 | As a shop owner, I can generate a WhatsApp reminder so that I can collect politely. | Message text contains customer name, remaining balance (formatted Rp), and due date. A `wa.me` link opens with the message prefilled. Customers without a phone number show a clear message instead of a broken link. |
-| US-8 | As a shop owner, I can search customers and archive fully paid ones so that my list stays tidy. | Search is case-insensitive and matches partial names. Customers with balance > 0 cannot be archived or deleted. Archived customers are hidden from the default list. |
+| US-1 | Sebagai pemilik warung, saya dapat login agar catatan saya tetap pribadi. | Kredensial yang benar membuka dashboard. Password salah menampilkan pesan error. Halaman lain mengarahkan ke halaman login jika belum login. |
+| US-2 | Sebagai pemilik warung, saya dapat menambah pelanggan agar saya bisa mencatat utangnya. | Nama wajib diisi. Nama yang sama ditolak. Nomor telepon, jika diisi, hanya berisi angka (08.. atau +62..). |
+| US-3 | Sebagai pemilik warung, saya dapat mencatat utang baru agar saldo pelanggan bertambah. | Nominal harus bilangan bulat lebih dari 0. Tanggal otomatis hari ini dan tidak boleh kosong. Jatuh tempo (opsional) tidak boleh sebelum tanggal utang. Saldo pelanggan bertambah sebesar nominal. |
+| US-4 | Sebagai pemilik warung, saya dapat mencatat pembayaran agar sisa utang berkurang. | Nominal harus lebih dari 0. Nominal tidak boleh melebihi sisa utang. Saldo berkurang sebesar nominal. Pelanggan yang sudah membayar penuh berstatus "Lunas". |
+| US-5 | Sebagai pemilik warung, saya dapat melihat saldo dan riwayat pelanggan agar tahu persis berapa yang ia utang. | Riwayat diurutkan dari tanggal terbaru. Saldo = total utang - total pembayaran. Setiap catatan menampilkan jenis, nominal, tanggal, dan catatan. |
+| US-6 | Sebagai pemilik warung, saya dapat melihat daftar pelanggan yang telat agar tahu siapa yang perlu diingatkan. | Pelanggan dengan saldo > 0 dan jatuh tempo sebelum hari ini muncul di daftar "Telat". Pelanggan yang sudah lunas tidak pernah muncul. Daftar menampilkan jumlah hari telat. |
+| US-7 | Sebagai pemilik warung, saya dapat membuat pengingat WhatsApp agar bisa menagih dengan sopan. | Teks pesan berisi nama pelanggan, sisa utang (format Rp), dan tanggal jatuh tempo. Tautan `wa.me` terbuka dengan pesan yang sudah terisi. Pelanggan tanpa nomor telepon menampilkan pesan yang jelas, bukan tautan rusak. |
+| US-8 | Sebagai pemilik warung, saya dapat mencari pelanggan dan mengarsipkan yang sudah lunas agar daftar tetap rapi. | Pencarian tidak membedakan huruf besar/kecil dan cocok dengan sebagian nama. Pelanggan dengan saldo > 0 tidak bisa diarsipkan atau dihapus. Pelanggan yang diarsipkan tidak tampil di daftar utama. |
 
 ## 6. Kebutuhan Fungsional
 
@@ -90,44 +88,67 @@ Fokus proyek: **satu fitur inti (manajemen kasbon), kecil, selesai dengan baik**
 - **Portabilitas:** dapat dijalankan dengan `docker compose up` atau maksimal 4 perintah.
 - **Bahasa UI:** Bahasa Indonesia.
 
-## 8. Arsitektur dan Tech Stack (Usulan)
+## 8. Arsitektur dan Tech Stack
 
-Stack final bebas dipilih sesuai kemampuan. Usulan: **Python + FastAPI (atau Flask) + SQLite + pytest**, template HTML sederhana.
+KasbonKu dibangun sebagai aplikasi web satu halaman (SPA) yang berbicara langsung ke layanan backend terkelola.
+
+**Tech stack:**
+
+- **Frontend:** React + TypeScript, dibangun dengan Vite.
+- **Styling:** Tailwind CSS (responsif untuk layar HP).
+- **Backend dan database:** Supabase (PostgreSQL, Auth, dan Storage untuk foto warung).
+- **Pengujian:** Vitest, dijalankan dengan satu perintah `npm test`.
+- **Deploy:** Vercel (frontend) dan Supabase (database).
+
+**Struktur folder (`src/`):**
 
 ```
-kasbonku/
-  app/
-    routes/         # tipis: terima request, panggil service
-    services/       # aturan bisnis: hitung_saldo, catat_pembayaran
-    repositories/   # akses database
-    models/         # Pelanggan, Transaksi
-    validators/     # validasi input
-    templates/
-  tests/
-  Dockerfile
-  docker-compose.yml
-  .env.example
-  .gitignore
-  README.md
+src/
+  main.tsx, App.tsx     # titik masuk dan routing (landing / auth / dashboard)
+  features/             # tampilan per fitur (UI)
+    landing/            # halaman publik
+    auth/               # login, daftar, lupa dan reset sandi
+    dashboard/          # beranda, pelanggan, transaksi, laporan, pengaturan
+  components/           # komponen yang dipakai bersama (AddCustomerModal)
+  api/                  # satu-satunya lapisan yang bicara ke Supabase
+  validation/           # aturan validasi input dan aturan bisnis transaksi
+  lib/                  # logika murni: analytics, types, supabase client
+    utils/              # currency, date, text, whatsapp, print, csv
+  styles/               # CSS global
+  __tests__/            # tes otomatis
+database/
+  kasbonku_migrasi.sql  # skema tabel, view saldo, trigger
+  kasbonku_isolasi.sql  # RLS agar data tiap warung terpisah
 ```
 
-**Prinsip desain:** aturan bisnis hanya di `services/` supaya bisa dites tanpa web dan tidak diduplikasi di route.
+**Alur data:** `features/` (tampilan) memanggil `validation/` dan `lib/` untuk aturan dan perhitungan, lalu `api/` untuk membaca dan menulis data ke Supabase.
+
+**Prinsip desain:**
+
+- Aturan bisnis (batas kasbon, kasbon terkunci, pembayaran melebihi sisa, pesan WhatsApp, daftar telat) berada di `validation/` dan `lib/` sebagai fungsi murni, sehingga bisa dites tanpa tampilan dan tanpa database.
+- Seluruh akses data dipusatkan di `api/`, dan setiap query difilter dengan `warung_id`.
+- Saldo dihitung di satu tempat, yaitu view database `v_saldo_pelanggan`, sehingga angkanya konsisten di semua layar.
+- Keamanan data: password di-hash oleh Supabase Auth, isolasi antar akun dijaga oleh Row Level Security, dan kunci hanya disimpan di `.env.local` (tidak masuk repo).
 
 ## 9. Model Data (Ringkas)
 
-**customers**
+**warung** (akun pemilik, terhubung ke Supabase Auth)
 
-- id, name (unik), phone (opsional), is\_archived, created\_at
+- id, nama_pemilik, nama_warung, whatsapp, alamat, foto_url, catatan_struk, plafon_default, kunci_kasbon, template_wa (`santun` atau `formal`), created_at
 
-**transactions**
+**pelanggan**
 
-- id, customer\_id, type (`DEBT` atau `PAYMENT`), amount (integer rupiah), date, due\_date (opsional, untuk DEBT), note, created\_at
+- id, warung_id, kode, nama, whatsapp (opsional), alamat, catatan_pribadi, batas_kasbon (opsional), created_at
 
-**users**
+**transaksi**
 
-- id, username, password\_hash
+- id, warung_id, pelanggan_id, jenis (`kasbon` atau `cicilan`), nominal (rupiah), barang, catatan, tempo_option, jatuh_tempo (opsional, untuk kasbon), metode_bayar, no_kwitansi (untuk cicilan, format `KWT-0001`), created_at
 
-Saldo pelanggan = jumlah semua `DEBT` dikurangi jumlah semua `PAYMENT`.
+**v_saldo_pelanggan** (view, dihitung otomatis)
+
+- pelanggan_id, total_kasbon, total_bayar, sisa_utang, jatuh_tempo_terakhir, hari_telat
+
+Sisa utang pelanggan = jumlah semua `kasbon` dikurangi jumlah semua `cicilan`. Trigger `cek_batas_kasbon` di database menolak kasbon yang melewati batas pelanggan.
 
 ## 10. Strategi Pengujian
 
@@ -199,6 +220,13 @@ Target 8 tes otomatis (syarat minimal 5), dijalankan dengan satu perintah `pytes
 ## 16. Kebijakan Penggunaan AI
 
 AI diperbolehkan. Semua penggunaan dicatat di README bagian "AI usage" (tool apa dan untuk apa). Setiap bagian yang tidak bisa dijelaskan di video dianggap bukan milik sendiri, jadi pahami semua kode sebelum dikumpulkan.
+
+**Penggunaan AI dalam proyek ini:**
+
+- **Tool:** Claude (Anthropic).
+- **Bantuan coding:** menulis dan merapikan kode, mencari penyebab bug, menyusun struktur folder, dan membuat contoh tes.
+- **Brainstorming:** menggali ide fitur, merapikan alur aplikasi, dan menyusun PRD serta dokumentasi.
+- **Tanggung jawab:** semua keluaran AI saya baca, uji, dan pahami sebelum dipakai, sehingga bisa saya jelaskan sendiri di video.
 
 ## 17. Definition of Done
 
