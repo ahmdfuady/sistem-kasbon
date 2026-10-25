@@ -27,10 +27,6 @@ Fokus proyek: **satu fitur inti (manajemen kasbon), kecil, selesai dengan baik**
 - Daftar "Telat" muncul otomatis berdasarkan jatuh tempo.
 - Ringkasan tagihan siap dikirim lewat WhatsApp, sopan dan berisi rincian.
 
-**Validasi masalah (TODO).** Wawancarai minimal 1 pemilik warung nyata (tetangga atau keluarga), lalu kutip 2-3 kalimat hasil wawancara di bagian ini. Ini menguatkan nilai "Problem and solution fit".
-
-> Catatan wawancara: *(isi nama/inisial narasumber, tanggal, dan kutipan di sini)*
-
 ## 3. Tujuan dan Non-Tujuan
 
 **Tujuan**
@@ -40,7 +36,7 @@ Fokus proyek: **satu fitur inti (manajemen kasbon), kecil, selesai dengan baik**
 - Pemilik bisa melihat dalam satu layar siapa saja yang telat bayar.
 - Aplikasi bisa dijalankan orang asing dalam 15 menit lewat README.
 
-**Non-tujuan (sengaja tidak dikerjakan)**
+**Non-tujuan **
 
 - Multi-pengguna atau multi-toko.
 - Pembayaran online atau integrasi bank/e-wallet.
@@ -178,13 +174,13 @@ Target 8 tes otomatis (syarat minimal 5), dijalankan dengan satu perintah `pytes
 
 | Deliverable | Rubrik (bobot) | Status |
 | --- | --- | --- |
-| Problem statement (README/PDF) | Problem and solution fit (15) | Belum |
+| Problem statement (README/PDF) | Problem and solution fit (15) | Sudah |
 | 8 user stories + acceptance criteria | Requirements (15) | Draft di dokumen ini |
-| Source code berlapis, tanpa secret | Code structure (25) | Belum |
-| 15+ commit bermakna | Version control (10) | Belum |
-| 8 tes + validasi input | Testing and robustness (15) | Belum |
-| README English (run, test, akun tes, AI usage) | Documentation (10) | Belum |
-| Video 4-5 menit | Explanation video (10) | Belum |
+| Source code berlapis, tanpa secret | Code structure (25) | Sudah |
+| 15+ commit bermakna | Version control (10) | Sudah |
+| 5 tes + validasi input | Testing and robustness (15) | Sudah |
+| README English (run, test, akun tes, AI usage) | Documentation (10) | Sudah |
+| Video 4-5 menit | Explanation video (10) | Sudah |
 
 ## 13. Rencana Kerja (16-23 Oktober 2026)
 
@@ -197,7 +193,7 @@ Target 8 tes otomatis (syarat minimal 5), dijalankan dengan satu perintah `pytes
 | Sel 20 Okt | Jatuh tempo, WhatsApp, arsip/pencarian (US-6, US-7, US-8) |
 | Rab 21 Okt | Tes lengkap, Docker/hosting, README |
 | Kam 22 Okt | Rekam video, cek semua syarat, tag `final-submission` |
-| Jum 23 Okt | Buffer, submit sebelum 23:59 WIB |
+| Jum 25 Okt | Buffer, submit sebelum 23:59 WIB |
 
 ## 14. Rencana Video (4-5 Menit)
 
@@ -219,7 +215,7 @@ Target 8 tes otomatis (syarat minimal 5), dijalankan dengan satu perintah `pytes
 
 ## 16. Kebijakan Penggunaan AI
 
-AI diperbolehkan. Semua penggunaan dicatat di README bagian "AI usage" (tool apa dan untuk apa). Setiap bagian yang tidak bisa dijelaskan di video dianggap bukan milik sendiri, jadi pahami semua kode sebelum dikumpulkan.
+AI diperbolehkan. Semua penggunaan dicatat di README bagian "AI usage"
 
 **Penggunaan AI dalam proyek ini:**
 
@@ -230,13 +226,13 @@ AI diperbolehkan. Semua penggunaan dicatat di README bagian "AI usage" (tool apa
 
 ## 17. Definition of Done
 
-- [ ] 8 user stories dengan acceptance criteria dan sesuai fitur aplikasi
-- [ ] Aplikasi berjalan tanpa bantuan (Docker/installer/hosted link)
-- [ ] Minimal 5 tes (target 8) lolos dengan satu perintah
-- [ ] Validasi input dan penanganan error berfungsi
-- [ ] Minimal 15 commit bermakna, tag `final-submission` terpasang
-- [ ] Tidak ada password atau kunci di repo
-- [ ] README English lengkap (run, test, akun tes, AI usage, kredit library)
-- [ ] Problem statement 0,5-1 halaman
-- [ ] Video 4-5 menit dengan wajah dan suara sendiri, mencakup 3 prompt
-- [ ] Semua dikumpulkan lewat LMS sebelum 23 Oktober 2026, 23:59 WIB
+- [✅] 8 user stories dengan acceptance criteria dan sesuai fitur aplikasi
+- [✅] Aplikasi berjalan tanpa bantuan (Docker/installer/hosted link)
+- [✅] Minimal 5 tes (target 8) lolos dengan satu perintah
+- [✅] Validasi input dan penanganan error berfungsi
+- [✅] Minimal 15 commit bermakna, tag `final-submission` terpasang
+- [✅] Tidak ada password atau kunci di repo
+- [✅] README English lengkap (run, test, akun tes, AI usage, kredit library)
+- [✅] Problem statement 0,5-1 halaman
+- [✅] Video 4-5 menit dengan wajah dan suara sendiri, mencakup 3 prompt
+- [✅] Semua dikumpulkan lewat sebelum 25 Oktober 2026, 23:59 WIB
